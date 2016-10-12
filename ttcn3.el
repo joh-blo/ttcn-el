@@ -26,15 +26,29 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-(require 'cc-mode)			; ttcn-3-mode inherits from cc-mode
+(require 'cc-mode)			; ttcn3-mode inherits from cc-mode
 
 (eval-when-compile
   (require 'cc-langs)
   (require 'cc-fonts))
 
 (eval-and-compile
-  (c-add-language 'ttcn-3-mode 'c-mode))
+  (c-add-language 'ttcn3-mode 'c-mode))
 
+;;
+;; Associate files extensions ".erl" and ".hrl" with Erlang mode.
+;;
+
+;;;###autoload
+(let ((a '("\\.ttcn\\'" . ttcn3-mode))
+      (b '("\\.ttcn3\\'" . ttcn3-mode)))
+  (or (assoc (car a) auto-mode-alist)
+      (setq auto-mode-alist (cons a auto-mode-alist)))
+  (or (assoc (car b) auto-mode-alist)
+      (setq auto-mode-alist (cons b auto-mode-alist))))
+
+
+;;; TTCN stuff
 (defconst c-TTCN3-conditional-key "do\\|else\\|for\\|if\\|while")
 (defconst c-TTCN3-comment-start-regexp "/\\([*][*]?\\)")
 (defconst c-TTCN3-defun-prompt-regexp "\\<function\\>")
@@ -443,10 +457,10 @@ If point is on a keyword, help for that keyword will be shown."
         (require 'speedbar)
         (funcall (symbol-function 'speedbar-add-supported-extension) ext))))
 
-(ttcn3-add-extensions ".ttcn(3)?")
+(ttcn3-add-extensions ".ttcn")
 
 ;;;###autoload
-(define-derived-mode ttcn-3-mode c-mode "TTCN-3"
+(define-derived-mode ttcn3-mode c-mode "TTCN-3"
   "Major mode for editing TTCN-3 core language.  Reference: rev. 5 of
 the BNF with changes until 2001-10.
 
@@ -457,8 +471,8 @@ in the info documenation for that mode."
   (setq local-abbrev-table ttcn3-mode-abbrev-table
 	abbrev-mode t)
   (use-local-map ttcn3-mode-map)
-  (c-init-language-vars ttcn-3-mode)
-  (c-common-init 'ttcn-3-mode)
+  (c-init-language-vars ttcn3-mode)
+  (c-common-init 'ttcn3-mode)
   (setq comment-start "/* "
 	comment-end   " */"
  	c-conditional-key c-TTCN3-conditional-key

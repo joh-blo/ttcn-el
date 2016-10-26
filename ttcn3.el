@@ -41,11 +41,14 @@
 
 ;;;###autoload
 (let ((a '("\\.ttcn\\'" . ttcn3-mode))
-      (b '("\\.ttcn3\\'" . ttcn3-mode)))
+      (b '("\\.ttcn3\\'" . ttcn3-mode))
+      (c '("\\.ttcnpp\\'" . ttcn3-mode)))
   (or (assoc (car a) auto-mode-alist)
       (setq auto-mode-alist (cons a auto-mode-alist)))
   (or (assoc (car b) auto-mode-alist)
-      (setq auto-mode-alist (cons b auto-mode-alist))))
+      (setq auto-mode-alist (cons b auto-mode-alist)))
+  (or (assoc (car c) auto-mode-alist)
+      (setq auto-mode-alist (cons c auto-mode-alist))))
 
 
 ;;; TTCN stuff
